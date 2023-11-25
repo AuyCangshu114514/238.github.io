@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<style>
+			#all_btn{
+				position: fixed;
+				top: 30%;
+				left: 50%;
+				text-align: center;
+				transform: translate(-50%,0);
+				width: 80vw;
+			}
+			#btn_history{
+				background-color: firebrick;
+				color: white;
+				border-radius: 20px;
+				width: 30vw;
+				height: 15vw;
+			}
+			#sucai{
+				background-color: yellow;
+				color: black;
+				border-radius: 20px;
+				width: 30vw;
+				height: 15vw;
+			}
+			#logo_img{
+				position: fixed;
+				bottom: 3%;
+				right: 5%;
+				width: 50vw;
+				
+			}
+			#ice_tea{
+				background-color: rgba(218, 145, 0, 0.8);
+				color: black;
+				border-radius: 20px;
+				width: 30vw;
+				height: 15vw;
+			}
+			#music{
+				background-color: rgba(85, 255, 127, 0.8);
+				color: black;
+				border-radius: 20px;
+				width: 30vw;
+				height: 15vw;
+			}
+		</style>
+	</head>
+
+	<body>
+		<img id="logo_img" src="img/logo.png" alt="什么垃圾手机,这都显示不了">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">特典</h1>
+		</header>
+		<div class="mui-content">
+			
+			<div id="all_btn">
+				<button type="button" class="mui-btn" id='btn_history' onclick="document.getElementById('anniu').style.display = 'block'">按钮的故事</button>
+				<button type="button" class="mui-btn" id='sucai' onclick="document.getElementById('sucai2').style.display = 'block'">没用上的素材</button>
+				<button type="button" class="mui-btn" id='ice_tea' onclick="document.getElementById('none_sucai').style.display = 'block'">里宿命的饮料</button>
+				<button type="button" class="mui-btn" id='music' onclick="document.getElementById('music_cal').style.display = 'block'">臻品乐音</button>
+				
+			</div>
+		
+		</div>
+		<div id="anniu" style="display: none;">
+			<img src="img/btn_history.jpg" alt="显示不出来,我也没办法" style="position: relative;width: 100vw;">
+			<button style ='z-index: 1;background-color: black;color: white;width: 100vw;' onclick="document.getElementById('anniu').style.display = 'none'">关闭</button>
+		</div>
+		
+		<div id="none_sucai" style="display: none;">
+			<video id ='audio' controls width="400px">
+				<source src="game_html/vid/ice_tea.mp4" type="video/mp4" id='video_mp4'>
+				什么垃圾手机，这都显示不了
+				Your fuckking phone has been BOOM
+			</video>
+		</div>
+		
+		<div id="sucai2" style="display: none;">
+			<video id ='audio'controls width="400px">
+				<source src="game_html/vid/huangshi_sleep.avi" type="video/avi" id='video_avi'>
+				什么垃圾手机，这都显示不了
+				Your fuckking phone has been BOOM
+			</video>
+		</div>
+		
+		<div id="music_cal" style="width: 110vw; display: none;">
+			miki.mp3<audio src="aud/miki.mp3" controls></audio>
+			
+			Wet hands.mp3<audio src="aud/Wet Hands.mp3" controls></audio>
+			see you again.mp3<audio src="aud/see_you_again.mp3" controls></audio>
+		</div>
+		<script src="js/mui.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			
+		</script>
+	</body>
+
+</html>

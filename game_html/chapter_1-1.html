@@ -1,0 +1,682 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<script src="js/gobla.js"></script>
+		<style type="text/css">
+			/* 背景图片 */
+			#bg_img{
+				position: fixed;
+				top: 0%;
+				left: 0%;
+				z-index: -5;
+				height: 100vh;
+				
+			}
+			
+			/* 人物图片 */
+			.person_img{
+				position: fixed;
+				left: 50%;
+				bottom: -20%;
+				transform: translate(-50%,0);
+				z-index: -1	;
+				height: 100vh;
+			}
+			.person2_img{
+				position: fixed;
+				left: 50%;
+				bottom: -20%;
+				transform: translate(-50%,0);
+				z-index: -1	;
+				height: 100vh;
+			}
+			
+			/* 对话框 */
+			.show_dialogue{
+				position: fixed;
+				background-color: rgba(61, 255, 226, 0.5);
+				width: 100vw;
+				height: 30vh;
+				border-radius: 25px;
+				bottom: 1%;
+				text-align: center;
+				z-index: 4;
+			}
+			
+			/* NEXT按钮 */
+			.next{
+				position: fixed;
+				bottom: 1%;
+				right: 1%;
+				width: 20%;
+				/* height: 100%; */
+				/* background-color: rgba(170, 170, 255, 0.7); */
+				border: none;
+				color: white;
+				z-index: 5;
+			}
+			
+			/* 章节显示 */
+			.chapter_name{
+				position: fixed;
+				top: 0%;
+				/* background-color: rgba(5, 124, 234, 0.6); */
+				/* background-image: url('../img/chapter_bg.jpg'); */
+				background-color: rgba(0,0,0,0);
+				height: 8vh;
+				width: 50vw;
+				text-align: center;
+				z-index: 10;
+				animation: chaper_show 5s;
+				/* animation-fill-mode: forwards; */
+				transform: translate(-150%,0);
+				
+			}
+			@keyframes chaper_show{
+				0%{transform: translate(-150%,0);display: none;}
+				1%{transform: translate(-150%,0);display: block;}
+				30%{transform: translate(0);}
+				70%{transform: translate(0);}
+				99%{transform: translate(-150%,0);}
+				100%{transform: translate(-150%,0);display: none;}
+			}
+			
+			/* 全屏结束 */
+			.end{
+				position: fixed;
+				height: 100vh;
+				width: 100vw;
+				text-align: center;
+				background-color: black;
+				color:white;
+				z-index: 999;
+				top: 0%;
+				display: none;
+			}
+			
+			/* 选择 */
+			.choose{
+				height: 40vh;
+				display: none;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+			}
+			.choose_one{
+				width: 100vw;
+				background-image: url();
+				color: white;
+				text-align: center;
+				position: fixed;
+				left: 50%;
+				transform: translate(-50%,0);
+			}
+			.choose_two{
+				width: 100vw;
+				background-image: url();
+				color: white;
+				text-align: center;
+				position: fixed;
+				left: 50%;
+				transform: translate(-50%,0);
+			}
+			.choose_three{
+				width: 100vw;
+				background-image: url();
+				color: white;
+				text-align: center;
+				position: fixed;
+				left: 50%;
+				transform: translate(-50%,0);
+			}
+			
+			/* 存档 */
+			.save_data{
+				position: fixed;
+				width: 20vw;
+				right: 3%;
+				top: 3%;
+			}
+			#save_btn{
+				background-color: beige;
+				width: 15vw;
+			}
+			
+			/* 你亖了 */
+			#you_die{
+				position: fixed;
+				height: 100vh;
+				width: 100vw;
+				background-color: rgba(255, 0, 0, 0.7);
+				text-align: center;
+				top:0;
+				left:0;
+				display: none;
+				z-index: -1;
+			}
+			#tip{
+				position: fixed;
+				left: 50%;
+				bottom: 0%;
+				transform: translate(-50%,0);
+				width: 100vw;
+				color: white;
+				background-color: gainsboro;
+				z-index: 4;
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script src="../js/mui.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		
+		
+		<!-- html代码区 -->
+		<div class="mui-content">
+			
+			<!-- 图片 -->
+			<img class = 'bg_img' id='bg_img' src='img/bg_img/fantang.jpg'/><!-- 背景图 -->
+			<img class = 'person_img' id='person_img' src='img/character/huangshi/huangshi_smile.png'/><!-- 人物图 -->
+			<img class = 'person2_img' id='person2_img' src='img/character/huangjiaru/huangjiaru_nomal.png'/><!-- 人物图 -->
+			
+			<!-- 对话框 -->
+			<div class='show_dialogue'id='show_dialogue'>
+				
+				<h1 class='dia_text' id='dia_text' style="font-size:140%;text-align: left;width: 100vw;"></h1>
+			</div>
+			
+			<audio src="" id="bg_music"></audio>
+			<!-- 下一个 按钮 -->
+			<!-- <button class='next' id='next' onclick="next()">NEXT</button> -->
+			<img src="img/ui/next_btn.png" id="next" class="next">
+			
+			<!-- 章节名 -->
+			<div class='chapter_name' id="chapter_name">
+				<img src="img/ui/chapter_bg.png" style="width: 80vw;position: fixed;z-index: 3;left: 0%;height: 9vh;transform: translate(-10%,0)">
+				<h1 style="position: fixed;top: 4vh;
+				transform: translate(-10%,-50%);z-index: 4;width: 80vw;">Chapter 1-1</h1>
+			</div>
+			<p id="tip">阿姨其实很好的，故事纯属虚构</p>
+			<!-- 存档按钮 -->
+			<div class='save_data'>
+				<button type="submit" id="save_btn">存档</button>
+			</div>
+			
+			<!-- 结束窗口 -->
+			<div class="end" id='end'>
+				<h1 style="position: fixed;top: 50%;left: 50%;
+				transform: translate(-50%,-50%);width: 100vw;" id="end_text"> 该章节已结束！</h1>
+				<h3 style="position: fixed;top: 60%;left: 50%;
+				transform: translate(-50%,-50%);width: 100vw;" id="end_text2">&nbsp;</h3>
+			</div>
+			
+			
+			<!-- 选择窗口 -->
+			<div class="choose" id="choose">
+				<div class="choose_one" id="choose_one">
+					<button class='choose_1' id ='choose_1' style="width: 80vw; height: 7vh;">选择1</button>
+					
+				</div>
+				<br>
+				<br>
+				<br>
+				<div class="choose_two" id="choose_two">
+					<button class='choose_2' id ='choose_2' style="width: 80vw; height: 7vh;">选择2</button>
+				</div>
+				<br>
+				<br>
+				<br>
+				<div class="choose_three" id="choose_three">
+					<button class='choose_3' id ='choose_3' style="width: 80vw; height: 7vh;">选择3</button>
+				</div>
+			</div>
+			
+		</div>
+		
+		<!-- 你死了 -->
+		<div id="you_die">
+			<br>
+			<br>
+			<br>
+			<h1 style="color: white;">你死了!</h1>
+			<p style="color: yellow;">分数：114514</p>
+		</div>
+
+		<!-- 内嵌JS代码区 -->
+		
+		<script>
+			left_in('person_img')
+			right_in('person2_img')
+			// 获取并解析JSON数据
+			var jsonData = localStorage.getItem("jsonData");
+			localStorage.removeItem("jsonData");
+			var data = JSON.parse(jsonData);
+			
+			// var data = {
+			// 	love_lv:0,
+			// 	love_ex:0,
+			// 	chapter:'0-1',
+			// 	item:[],
+			// 	dia_id:dia_id
+			// }
+			
+
+			// 基本变量
+			
+			//文案
+			var dialogue = ['(饭堂)','【黄石】啊，好多人啊','【黄家儒】……','choose',
+			//插队5
+			'插队？','插谁的队？','choose',
+				//学姐8
+				'(我直接插入)','【学姐】……','【学姐】%￥……&@！','（文案不会骂人，你找个人骂下）','choose','但是，你变成了鬼！！','end',//13被骂死了,进入鬼线
+				//学长14
+				'【学长】你 为 什 么 插 我 队','【黄家儒】饿','【黄石】饿','【学长】（笑）','【学长】加入我们的健身吧','【黄石】我们商量下','【黄家儒】……','【黄石】','【黄石】我还不想给一拳打亖','【黄家儒】……','end',//健身24
+				//弱智26
+				'【学长】嘿嘿','【学长】嘿嘿嘿','【学长】嘻嘻','【学长】（碰了黄石一下）','【学长】嘻嘻嘿嘿','【黄家儒】这个学长脑子是不是不怎么好使','【黄石】……','【黄石】嘿','【黄家儒】？','【黄石】嘿嘿，欸嘿','【黄石】嘻嘻','【黄家儒】！！','【黄家儒】你不会变成傻子了吧','【黄石】嘿嘿，咦嘻嘻，欸嘿','end',//弱智病毒线39
+			//吃泡面40
+			'【黄家儒】你说得对，但我觉得不如吃泡面','【黄石】说得好','【黄石】支持','【黄石】【黄家儒】芜湖','【黄家儒】要不我请你吧','【黄石】好','（滴）','（走出）','【小卖部阿姨】你没买东西不能出去','【黄石】？？','【黄石】他帮我买了','【小卖部阿姨】那是他买的，不管你事','choose',
+				//老登，给你脸了53
+				'【黄家儒】老登！给你脸了！','（cua）','（砰）','【黄家儒】好痛','【黄家儒】什么玩意打我一拳','【？】你有没有素质！','【黄家儒】不是哥们，你有病吧','【里宿命】别以为我不知道，刚刚的选项里明明有更文明的','【黄家儒】那你tm打屏幕前的那个人啊，你打我干嘛','【里宿命】要不，你重选吧','choose',
+					//64
+					'【黄家儒】阿姨这不好吧','【小卖部阿姨】去去去一边玩去','【小卖部阿姨】阿姨这规定就这样','【小卖部阿姨】阿姨我啊，就喜欢钱了','【黄家儒】你看看她','【黄家儒】值不值一句老登','【里宿命】','【里宿命】正义的我直接跑路','【黄家儒】你跑你（）','end',//追逐结局
+				//阿姨，这不好吧74
+				'【黄家儒】阿姨，这不好吧','【阿姨】！','【阿姨】竟然这么温柔','【阿姨】这这这这这……','【阿姨】！','BOOMMMMM','（阿姨被你温柔到爆了）','【阿姨】臭小子竟然炸我','【阿姨】受死吧','【黄家儒】？？？','【黄家儒】来吧，我是不会输的！','choose',//85
+					//上勾拳86
+					'【黄家儒】看我左勾拳！','【系统】黄家儒使用了左勾拳！','【系统】对敌人【阿姨】造成了1点伤害！','【阿姨】毁 天 灭 地','【阿姨】终极爆破回旋无影零食猛烈砸击','【阿姨】！！！','【阿姨】小伙子挺有精神，全送你了','【阿姨】哈哈哈','【黄家儒】谢？谢','【黄家儒】（？）','【黄家儒】这堆这么有东西冒光','【黄家儒】！！','【黄家儒】这难道是！','【黄家儒】黄金麦丽素！','【黄石】这是仙丹吧','【黄家儒】没吃过，不喜欢吃，送你','（石石石吃下后，飞向了月亮，带着……泡面）','end',//103结局8.15
+					//合体104
+					'【黄家儒】使用我们的组合技吧！','【黄石】组合什么？','【阿姨】技吧','【里宿命】……','【里宿命】你刚刚说了……那个禁忌词吧','【阿姨】你又是什么人','【里宿命】吾乃正义的使者——里宿命','【里宿命】今天，就来讨伐尔等满口喷屎之人','【里宿命】BGM，','【里宿命】起！','【里宿命】…………','【众人】…………','【里宿命】蠢b！放错了！','【Auy】?啊啊？点错了，不好意思','（卡）','【里宿命】哼哼，燃起来了','【里宿命】这便是','【里宿命】这便是 音 乐 的 力 量','【里宿命】啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊','end'//123燃爆结局24
+			]
+			
+			
+			
+			
+			// 关键字符串基本触发规则：
+			// 'choose'触发 选择函数
+			// 'end' 触发 结束函数，跳转下一章节
+
+			// 侦测字符串触发
+			var choose_id = 1 //选项id(第几次选项)
+			var choose_btn = document.getElementById('choose')
+			var choose_btn1 = document.getElementById('choose_1')
+			var choose_btn2 = document.getElementById('choose_2')
+			var choose_btn3 = document.getElementById('choose_3')
+			var next_btn = document.getElementById('next')
+			var end_text = document.getElementById('end_text')
+			var end_text2 = document.getElementById('end_text2')
+			var person_1 = document.getElementById('person_img')
+			var person_2 = document.getElementById('person2_img')
+			var bg_img = document.getElementById('bg_img')
+			var you_die = document.getElementById('you_die')
+			var bg_music = document.getElementById('bg_music')
+			var tip = document.getElementById('tip')
+			
+			function test_dia(){
+				if(dialogue[dia_id] =='choose'){
+					// 触发选择
+					choose_btn1.style.display = 'block'
+					choose_btn2.style.display = 'block'
+					choose_btn3.style.display = 'block'
+					choose_btn.style = 'display:block'
+					next_btn.style='display:none'
+					if(choose_id == 1){
+						// 代码块
+						choose_btn1.innerHTML = '看我直接插队'
+						// choose_btn2.innerHTML = '哦（高情商）'
+						choose_btn3.innerHTML = '我觉得不如吃泡面'
+						choose_btn2.style.display = 'none'
+						choose_btn1.onclick = function(){
+							dia_id = 5
+							overchoose()
+							choose_id = 'A'
+						}
+						choose_btn3.onclick = function(){
+							dia_id = 40
+							overchoose()//choose_id = 2
+						}
+					}
+					
+					else if(choose_id == 'A'){
+						//代码块
+						choose_btn1.innerHTML = '嘿丝学姐（？）'
+						choose_btn2.innerHTML = '肌肉学长（？）'
+						choose_btn3.innerHTML = '若质学长（？）'
+						choose_btn1.onclick = function(){
+							dia_id = 8
+							overchoose()
+							person_1.src = 'img/character/heshen/heshen_nomal.png'
+							person_2.style.display = 'none'
+							
+						}
+						choose_btn2.onclick = function(){
+							dia_id = 14
+							overchoose()
+							person_1.src = 'img/character/heshen/heshen_nomal.png'
+							person_2.style.display = 'none'
+						}
+						choose_btn3.onclick = function(){
+							dia_id = 26
+							overchoose()
+							person_1.src = 'img/character/heshen/heshen_nomal.png'
+							person_2.style.display = 'none'
+						}
+					}
+					else if(choose_id == 'A1'){
+						you_die.style.display = 'block'
+						choose_btn1.innerHTML = '重生'
+						choose_btn2.innerHTML = '主菜单'
+						choose_btn3.style.display = 'none'
+						choose_btn1.onclick = function(){
+							dia_id = dia_id + 1
+							overchoose()
+						}
+						choose_btn2.onclick = function(){
+							dia_id = dia_id + 1
+							overchoose()
+						}
+					}
+					else if(choose_id == 2){
+						choose_btn1.innerHTML = '老登！给你脸了'
+						choose_btn2.innerHTML = '阿姨，这不好吧'
+						choose_btn3.style.display = 'none'
+						choose_btn1.onclick = function(){
+							dia_id = 53
+							overchoose()
+							choose_id = 'B'
+						}
+						choose_btn2.onclick = function(){
+							dia_id = 74
+							overchoose()
+							choose_id = 'C'
+							person_2.src = 'img/character/huangjiaru/huangjiaru_nomal.png'
+						}
+					}
+					else if(choose_id == 'C'){
+						choose_btn1.innerHTML = '上勾拳'
+						choose_btn2.innerHTML = '黄石，我们合体！'
+						choose_btn3.style.display = 'none'
+						choose_btn1.onclick = function(){
+							dia_id = 86
+							overchoose()
+						}
+						choose_btn2.onclick = function(){
+							dia_id = 104
+							overchoose()
+						}
+					}
+					else if(choose_id == 'B'){
+						choose_btn1.innerHTML = '阿姨这不好吧'
+						choose_btn2.style.display = 'none'
+						choose_btn3.style.display = 'none'
+						choose_btn1.onclick = function(){
+							dia_id = 64
+							overchoose()
+							
+						}
+						
+					}
+				}
+				
+				else if(dialogue[dia_id] == 'end'){
+					// 触发结束事件
+					var end = document.getElementById('end')
+					end.style = 'display:block;'
+					if(dia_id == 13){
+						end_text2.innerHTML = '你变成了鬼！'
+						//继续传递数据
+						data.chapter = 'gui'
+						jsonData = JSON.stringify(data);
+						localStorage.setItem("jsonData", jsonData);
+						setTimeout(function(){
+							window.location.href = "chapter_gui.html";
+						},4000)
+						
+					}
+					else if(dia_id == 24){
+						end_text2.innerHTML = '你跟着学长去健身了！'
+						data.chapter = 'jianshen'
+						jsonData = JSON.stringify(data);
+						localStorage.setItem("jsonData", jsonData);
+						setTimeout(function(){
+							window.location.href = "chapter_jianshen.html";
+						},4000)
+					}
+					
+					else if(dia_id == 39){
+						end_text2.innerHTML = '弱智病毒爆发了！'
+						data.chapter = 'ruozhi'
+						jsonData = JSON.stringify(data);
+						localStorage.setItem("jsonData", jsonData);
+						setTimeout(function(){
+							window.location.href = "chapter_ruozhi.html";
+						},4000)
+					}
+					else if(dia_id == 73){
+						end_text.innerHTML = '追逐结局'
+						end_text2.innerHTML = '这次的追逐，那是最后的青春'
+						
+						jsonData = JSON.stringify(data);
+						localStorage.setItem("jsonData", jsonData);
+						setTimeout(function(){
+							window.location.href = "../end.html";
+						},4000)
+					}
+					else if(dia_id == 103){
+						end_text.innerHTML = '黄石奔月结局'
+						end_text2.innerHTML = '<del>嫦娥的典故出自与此</del>'
+						
+						jsonData = JSON.stringify(data);
+						localStorage.setItem("jsonData", jsonData);
+						setTimeout(function(){
+							window.location.href = "../end.html";
+						},4000)
+					}
+					else if(dia_id == 123){
+						end_text.innerHTML = '燃爆结局'
+						end_text2.innerHTML = '音乐的力量，直接燃爆'
+						
+						jsonData = JSON.stringify(data);
+						localStorage.setItem("jsonData", jsonData);
+						setTimeout(function(){
+							window.location.href = "../end.html";
+						},4000)
+					}
+				}
+			}
+			
+			
+			var dia_id = 0//文案播放进度
+			
+			//选择结束后调用该函数
+			function overchoose(){
+				choose_btn.style='display:none'
+				choose_btn1.style.removeProperty('background-color')
+				choose_btn2.style.removeProperty('background-color')
+				choose_btn3.style.removeProperty('background-color')
+				choose_id = choose_id + 1
+				next_btn.style = 'display:block'
+			}
+			
+			
+			// 控制刷新页面 -帧率为32帧
+			var dia_text = document.getElementById('dia_text')
+			var fpsshow = setInterval(function(){
+				//刷新文本
+				if(dialogue[dia_id] == 'choose'){
+					dia_text.innerHTML = '请选择'
+				}
+				else{
+					dia_text.innerHTML = dialogue[dia_id]
+				}
+				
+				//侦测文本
+				test_dia()
+				
+			},1000/32)
+			
+			// 执行下一个函数
+			mui('#next')[0].addEventListener('tap',function(){
+				dia_id = dia_id + 1
+				console.log(dia_id)
+				
+				// 判断特殊事件触发
+				if(dia_id == 15){
+					
+					person_1.src = 'img/character/huangshi/huangshi_smile.png'
+					
+				}
+				if(dia_id == 16){
+					person_1.src = 'img/character/huangjiaru/huangjiaru_nomal.png'
+				}
+				if(dia_id == 17){
+					person_1.src = 'img/character/heshen/heshen_nomal.png'
+				}
+				if(dia_id == 20){
+					
+					person_1.src = 'img/character/huangjiaru/huangjiaru_nomal.png'
+					person_2.src = 'img/character/huangshi/huangshi_smile.png'
+					person_1.style.display = 'block'
+					person_2.style.display = 'block'
+					left_in('person_img')
+					right_in("person2_img")
+				}
+				if(dia_id == 30){
+					person_1.src = 'img/character/huangjiaru/huangjiaru_nomal.png'
+					left_in('person_img')
+				}
+				if(dia_id == 31){
+					person_2.src = 'img/character/huangshi/huangshi_smile.png'
+					right_in('person2_img')
+				}
+				if(dia_id == 34){
+					right_out('person2_img')
+				}
+				if(dia_id == 35){
+					person_2.src = 'img/character/huangshi/huangshi_zhuangbi.png'
+					right_in('person2_img')
+					fly_out('person2_img')
+				}
+				if(dia_id == 38){
+					up_in('person2_img')
+				}
+				if(dia_id == 43){
+					right_out('person_img')
+					right_out('person2_img')
+				}
+				if(dia_id == 44){
+					left_in('person2_img')
+				}
+				if(dia_id == 46){
+					person_1.style.display = 'block'
+					person_1.src = 'img/character/heshen/heshen_nomal.png'
+					right_in('person1_img')
+				}
+				if(dia_id == 47){
+					left_out('person2_img')
+				}
+				if(dia_id == 48){
+					left_in('person_img')
+					person_2.src = 'img/character/huangshi/huangshi_smile.png'
+					right_in('person2_img')
+				}
+				if(dia_id == 49){
+					tip.style.display = 'block'
+				}
+				if(dia_id == 54){
+					person_1.src = 'img/character/lisuming/lisuming_smile_bg.png'
+					up_in('person_img')
+					person_2.src = 'img/character/huangjiaru/huangjiaru_nomal.png'
+					
+				}
+				if(dia_id == 60){
+					person_1.src = 'img/character/lisuming/lisuming_smile.png'
+				}
+				if(dia_id == 65){
+					
+					person_2.style.display ='none'
+					person_1.src = 'img/character/heshen/heshen_nomal.png'
+					up_in('person_img')
+				}
+				if(dia_id == 68){
+					person_2.style.display = 'block'
+					right_in('person2_img')
+				}
+				if(dia_id == 70){
+					person_1.src = 'img/character/lisuming/lisuming_a.png'
+					left_in('person_img')
+				}
+				if(dia_id == 71){
+					left_out('person_img')
+				}
+				if(dia_id == 72){
+					left_out('person2_img')
+				}
+				if(dia_id == 79){
+					fly_out('person_img')
+				}
+				if(dia_id == 81){
+					up_in('person_img')
+				}
+				if(dia_id == 90){
+					fly_out('person_img')
+				}
+				if(dia_id == 91){
+					up_in('person_img')
+				}
+				if(dia_id == 96){
+					person_1.src = 'img/character/huangjiaru/huangjiaru_nomal.png'
+					person_2.src = 'img/character/huangshi/huangshi_smile.png'
+					person_2.style.display = 'none'
+				}
+				
+				if(dia_id == 100){
+					person_2.style.display = 'block'
+					right_in('person2_img')
+				}
+				if(dia_id == 102){
+					fly_out('person2_img')
+				}
+				if(dia_id == 107){
+					person_2.src = 'img/character/lisuming/lisuming_smile.png'
+					up_in('person2_img')
+				}
+				if (dia_id == 113){
+					//代码块
+					bg_music.src = '../aud/miki.mp3'
+					bg_music.load()
+					bg_music.play()
+				}
+				if(dia_id == 118){
+					bg_music.pause()
+					bg_music.src = '../aud/see_you_again.mp3'
+					bg_music.load()
+					bg_music.play()
+				}
+				if(dia_id == 122){
+					rotateLeft('person_img')
+					rotateLeft('person2_img')
+				}
+			})
+			
+			// 存档
+			var save_btn = document.getElementById('save_btn')
+			save_btn.onclick = function(){
+				save(data)
+				console.log(data)
+			}
+			
+			
+			
+		</script>
+	</body>
+
+</html>

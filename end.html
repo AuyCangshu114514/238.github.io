@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<style>
+			html{
+				background-color: black;
+			}
+			#main{
+				background-color: black;
+				color: white;
+				position: fixed;
+				text-align: center;
+				display: none;
+				
+				width: 100vw;
+				
+			}
+			@keyframes scroll {
+			            0% {
+			                transform: translateY(100vh);
+			            }
+			            100% {
+			                transform: translateY(calc(-100vh - var(--divHeight)));
+			            }
+			        }
+		</style>
+	</head>
+
+	<body>
+		
+		<div id="main">
+			<h1 style="font-size: 150%;">原作</h1>
+			<h3>黎苏铭</h3>
+			<br>
+			<h1 style="font-size: 150%;">原画</h1>
+			<h3>黎苏铭</h3>
+			<br>
+			<h2 style="font-size: 150%;">代码</h2>
+			<h4>Auy_Cangshu</h4>
+			<br>
+			<h2 style="font-size: 150%;">制作</h2>
+			<img src="img/logo.png" alt="贰叁捌科技" style="width: 30vw;">
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<h1>- - - 出演 - - -</h1>
+			<br>
+			<br>
+			<h2 style="font-size: 150%;">黄家儒</h2>
+			<p style="color: white;">故事的小黄花，从出生那年就飘着</p>
+			<br>
+			<h2 style="font-size: 150%;">刘正宇<i>(饰河神)</i></h2>
+			<p style="color: white;">好了，现在你可以去通关你自己的故事了</p>
+			<br>
+			<h2 style="font-size: 150%;">黎苏铭<i>(饰里宿命)</i></h2>
+			<p style="color: white;">蚊子🦟能不能灭绝</p>
+			<br>
+			<h2 style="font-size: 150%;">黄磊<i>(饰黄石)</i></h2>
+			<p style="color: white;">世界之大为何我们相遇，难道是缘分，难道是天意</p>
+			<br>
+			<h2 style="font-size: 150%;">宁凯涛</h2>
+			<p style="color: white;">愿你有一天和你的青春重逢</p>
+			<br>
+			<h2 style="font-size: 150%;">鲁伟宸</h2>
+			<p style="color: white;">你说的对，但是我不玩原神</p>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<h4><small>Auy_Cangshu©2023</small></h4>
+		</div>
+		
+		<audio src="aud/Wet Hands.mp3" autoplay id="sound"></audio>
+		<script src="js/mui.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			var sound = document.getElementById('sound')
+			sound.load()
+			sound.play()
+			var mainDiv = document.getElementById("main");
+			window.onload = function() {
+			            
+						mainDiv.style.display = 'block'
+			            var divHeight = mainDiv.offsetHeight;
+			            mainDiv.style.setProperty('--divHeight', `${divHeight}px`);
+			            mainDiv.style.animation = "scroll 55s linear";
+			        };
+			var test_True = true
+			localStorage.setItem('test_True',test_True)
+			var LetMainNone = setTimeout(function(){
+				mainDiv.style.display = 'none'
+				clearTimeout(LetMainNone)
+				
+				
+				window.location.href = 'welcome.html'
+			},44000)
+		</script>
+	</body>
+
+</html>

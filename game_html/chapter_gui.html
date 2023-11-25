@@ -1,0 +1,431 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<script src="js/gobla.js"></script>
+		<style type="text/css">
+			/* 背景图片 */
+			#bg_img{
+				position: fixed;
+				top: 0%;
+				left: 0%;
+				z-index: -1;
+				height: 100vh;
+				transform: translate(-20%,0);
+			}
+			
+			/* 人物图片 */
+			.person_img{
+				position: fixed;
+				left: 50%;
+				bottom: -20%;
+				transform: translate(-50%,0);
+				z-index: -1	;
+				height: 100vh;
+			}
+			.person2_img{
+				position: fixed;
+				left: 50%;
+				bottom: -20%;
+				transform: translate(-50%,0);
+				z-index: -1	;
+				height: 100vh;
+			}
+			
+			/* 对话框 */
+			.show_dialogue{
+				position: fixed;
+				background-color: rgba(61, 255, 226, 0.5);
+				width: 100vw;
+				height: 30vh;
+				border-radius: 25px;
+				bottom: 1%;
+				text-align: center;
+				z-index: 4;
+			}
+			
+			/* NEXT按钮 */
+			.next{
+				position: fixed;
+				bottom: 1%;
+				right: 1%;
+				width: 20%;
+				/* height: 100%; */
+				/* background-color: rgba(170, 170, 255, 0.7); */
+				border: none;
+				color: white;
+				z-index: 5;
+			}
+			
+			/* 章节显示 */
+			.chapter_name{
+				position: fixed;
+				top: 0%;
+				/* background-color: rgba(5, 124, 234, 0.6); */
+				/* background-image: url('../img/chapter_bg.jpg'); */
+				background-color: rgba(0,0,0,0);
+				height: 8vh;
+				width: 50vw;
+				text-align: center;
+				z-index: 10;
+				animation: chaper_show 5s;
+				/* animation-fill-mode: forwards; */
+				transform: translate(-100%,0);
+				
+			}
+			@keyframes chaper_show{
+				0%{transform: translate(-100%,0);display: none;}
+				1%{transform: translate(-100%,0);display: block;}
+				30%{transform: translate(0);}
+				70%{transform: translate(0);}
+				99%{transform: translate(-100%,0);}
+				100%{transform: translate(-100%,0);display: none;}
+			}
+			
+			/* 全屏结束 */
+			.end{
+				position: fixed;
+				height: 100vh;
+				width: 100vw;
+				text-align: center;
+				background-color: black;
+				color:white;
+				z-index: 999;
+				top: 0%;
+				display: none;
+			}
+			
+			/* 选择 */
+			.choose{
+				height: 40vh;
+				display: none;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+			}
+			.choose_one{
+				width: 100vw;
+				background-image: url();
+				color: white;
+				text-align: center;
+				position: fixed;
+				left: 50%;
+				transform: translate(-50%,0);
+			}
+			.choose_two{
+				width: 100vw;
+				background-image: url();
+				color: white;
+				text-align: center;
+				position: fixed;
+				left: 50%;
+				transform: translate(-50%,0);
+			}
+			.choose_three{
+				width: 100vw;
+				background-image: url();
+				color: white;
+				text-align: center;
+				position: fixed;
+				left: 50%;
+				transform: translate(-50%,0);
+			}
+			
+			/* 存档 */
+			.save_data{
+				position: fixed;
+				width: 20vw;
+				right: 3%;
+				top: 3%;
+			}
+			#save_btn{
+				background-color: beige;
+				width: 15vw;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script src="../js/mui.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		
+		
+		<!-- html代码区 -->
+		<div class="mui-content">
+			
+			<!-- 图片 -->
+			<img class = 'bg_img' id='bg_img' src=''/><!-- 背景图 -->
+			<img class = 'person_img' id='person_img' src='img/character/huangjiaru/huangjiaru_nomal.png'/><!-- 人物图 -->
+			<img class = 'person2_img' id='person2_img' src=''/><!-- 人物图 -->
+			
+			<!-- 对话框 -->
+			<div class='show_dialogue'id='show_dialogue'>
+				
+				<h1 class='dia_text' id='dia_text' style="font-size:140%;text-align: left;width: 100vw;"></h1>
+			</div>
+			
+			
+			<!-- 下一个 按钮 -->
+			<!-- <button class='next' id='next' onclick="next()">NEXT</button> -->
+			<img src="img/ui/next_btn.png" id="next" class="next">
+			
+			<!-- 章节名 -->
+			<div class='chapter_name' id="chapter_name">
+				<img src="img/ui/chapter_bg.png" style="width: 50vw;position: fixed;z-index: 3;left: 0%;height: 9vh;">
+				<h1 style="position: fixed;top: 4vh;
+				transform: translate(0,-50%);z-index: 4;">Chapter-鬼</h1>
+			</div>
+			
+			<!-- 存档按钮 -->
+			<div class='save_data'>
+				<button type="submit" id="save_btn">存档</button>
+			</div>
+			
+			<!-- 结束窗口 -->
+			<div class="end" id='end'>
+				<h1 style="position: fixed;top: 50%;left: 50%;
+				transform: translate(-50%,-50%);width: 100vw;" id="end_text"> 该章节已结束！</h1>
+				<h2 style="position: fixed;top: 60%;left: 50%;
+				transform: translate(-50%,-50%);width: 100vw;" id="end_text2">&nbsp;</h2>
+			</div>
+			
+			
+			<!-- 选择窗口 -->
+			<div class="choose" id="choose">
+				<div class="choose_one" id="choose_one">
+					<button class='choose_1' id ='choose_1' style="width: 80vw; height: 7vh;">选择1</button>
+					
+				</div>
+				<br>
+				<br>
+				<br>
+				<div class="choose_two" id="choose_two">
+					<button class='choose_2' id ='choose_2' style="width: 80vw; height: 7vh;">选择2</button>
+				</div>
+				<br>
+				<br>
+				<br>
+				<div class="choose_three" id="choose_three">
+					<button class='choose_3' id ='choose_3' style="width: 80vw; height: 7vh;">选择3</button>
+				</div>
+			</div>
+			
+		</div>
+		
+
+		<!-- 内嵌JS代码区 -->
+		
+		<script>
+			left_in('person_img')
+			// 获取并解析JSON数据
+			var jsonData = localStorage.getItem("jsonData");
+			localStorage.removeItem("jsonData");
+			var data = JSON.parse(jsonData);
+			
+			// var data = {
+			// 	love_lv:0,
+			// 	love_ex:0,
+			// 	chapter:'0-1',
+			// 	item:[],
+			// 	dia_id:dia_id
+			// }
+			
+
+			// 基本变量
+			
+			//文案
+			var dialogue = ['【黄家儒】我说','【黄家儒】我们亖了哦','【黄石】？？？？','【黄石】尊都假嘟O.o','【黄家儒】难得亖一次，我们得做点什么','【黄石】？？？','choose',
+			//报仇！8
+			'【黄家儒】我们去报复学姐吧','【黄石】！！','【黄石】有鬼！','【黄石】麻麻~有鬼','【黄石】呜呜','【黄家儒】不去算了，我自己去','（打完饭的学姐）','【黄家儒】你好','【学姐】！！','【学姐】谁！！？？','【学姐】？幻听了？没人？','【黄家儒】我吃吃吃吃吃','（连饭带盘一起下肚）','<del>廉颇老矣，尚能饭否？</del>','【学姐】？？？','【学姐】我记得我刚刚应该是打了饭的啊','【学姐】再打一盘','【黄家儒】我吃吃吃吃吃','【学姐】？？？','【学姐】拿出英语书','【黄家儒】我吃吃吃吃吃','【学姐】！！','【学姐】这个地方有黑洞！！！','（随后，学姐开始了对黑洞的研究）','（并拿下了诺见尔物理学奖）','【学姐】我要感谢它！','【黄家儒】不用谢','【学姐】我要感谢它——我的小狗！','【黄家儒】？？？？？','end',//37
+			//去地府转一圈38
+			'【黄家儒】我们去地府吧！','【黄石】！！','【黄家儒】这就是地府了！','【黄石】这不就是我们班吗','【黄家儒】不不不，其实这是一个入口','【黄石】你这么知道的','【黄家儒】怨气大的地方都可以成为洞口','【黄家儒】这个地方每周四都会成为洞口','【黄石】快进去','（……）','【黄石】这不就是班里面麻','【黄家儒】非也，此地为真地府！','【黄石】那这有什么好玩的？','【黄家儒】这里没有好玩的','【黄家儒】都亖了，还玩什么','【黄石】！！！！','【黄石】不！！！！！！！！','end',//55
+			//去环游世界！56
+			'【黄家儒】我们是鬼','【黄家儒】那我们不是可以永生？','【黄石】还真是','【黄家儒】那我们去环游世界','【黄石】我觉得彳亍！','（……）','【黄石】这是什么雕像','【黄家儒】乡巴佬','【黄家儒】这是自由女神像','（……）','【黄家儒】自由女神真好看','【黄石】但是我觉得不如这个埃菲尔铁塔','end'//68
+			]
+			
+			
+			
+			
+			// 关键字符串基本触发规则：
+			// 'choose'触发 选择函数
+			// 'end' 触发 结束函数，跳转下一章节
+
+			// 侦测字符串触发
+			var choose_id = 1 //选项id(第几次选项)
+			var choose_btn = document.getElementById('choose')
+			var choose_btn1 = document.getElementById('choose_1')
+			var choose_btn2 = document.getElementById('choose_2')
+			var choose_btn3 = document.getElementById('choose_3')
+			var next_btn = document.getElementById('next')
+			var end_text = document.getElementById('end_text')
+			var end_text2 = document.getElementById('end_text2')
+			var person_1 = document.getElementById('person_img')
+			var person_2 = document.getElementById('person2_img')
+			var bg_img = document.getElementById('bg_img')
+			
+			function test_dia(){
+				if(dialogue[dia_id] =='choose'){
+					// 触发选择
+					choose_btn1.style.display = 'block'
+					choose_btn2.style.display = 'block'
+					choose_btn3.style.display = 'block'
+					choose_btn.style = 'display:block'
+					next_btn.style='display:none'
+					if(choose_id == 1){
+						// 代码块
+						choose_btn1.innerHTML = '去报复学姐！'
+						choose_btn2.innerHTML = '去地府转一圈'
+						choose_btn3.innerHTML = '去环游世界！'
+						choose_btn1.onclick = function(){
+							dia_id = 7
+							overchoose()
+						}
+						choose_btn2.onclick = function(){
+							dia_id = 37
+							overchoose()
+						}
+						choose_btn3.onclick = function(){
+							dia_id = 55
+							overchoose()
+						}
+					}
+					
+					
+					
+				}
+				else if(dialogue[dia_id] == 'end'){
+					// 触发结束事件
+					var end = document.getElementById('end')
+					end.style = 'display:block;'
+					if(dia_id == 36){
+						end_text.innerHTML = '无能结局!'
+						end_text2.innerHTML = '你什么也不是!'
+						//继续传递数据
+						
+						jsonData = JSON.stringify(data);
+						localStorage.setItem("jsonData", jsonData);
+						setTimeout(function(){
+							window.location.href = "../end.html";
+						},4000)
+						
+					}
+					else if(dia_id == 54){
+						end_text.innerHTML = '地府结局!'
+						end_text2.innerHTML = '你被困在了地府里!'
+						//继续传递数据
+						
+						jsonData = JSON.stringify(data);
+						localStorage.setItem("jsonData", jsonData);
+						setTimeout(function(){
+							window.location.href = "../end.html";
+						},4000)
+					}
+					else if(dia_id == 67){
+						end_text.innerHTML = '美丽结局!'
+						end_text2.innerHTML = '太美丽了wwwww'
+						//继续传递数据
+						
+						jsonData = JSON.stringify(data);
+						localStorage.setItem("jsonData", jsonData);
+						setTimeout(function(){
+							window.location.href = "../end.html";
+						},4000)
+					}
+				}
+			}
+			
+			
+			var dia_id = 0//文案播放进度
+			
+			//选择结束后调用该函数
+			function overchoose(){
+				choose_btn.style='display:none'
+				choose_btn1.style.removeProperty('background-color')
+				choose_btn2.style.removeProperty('background-color')
+				choose_btn3.style.removeProperty('background-color')
+				choose_id = choose_id + 1
+				next_btn.style = 'display:block'
+			}
+			
+			
+			// 控制刷新页面 -帧率为32帧
+			var dia_text = document.getElementById('dia_text')
+			var fpsshow = setInterval(function(){
+				//刷新文本
+				if(dialogue[dia_id] == 'choose'){
+					dia_text.innerHTML = '请选择'
+				}
+				else{
+					dia_text.innerHTML = dialogue[dia_id]
+				}
+				
+				//侦测文本
+				test_dia()
+				
+			},1000/32)
+			
+			// 执行下一个函数
+			mui('#next')[0].addEventListener('tap',function(){
+				dia_id = dia_id + 1
+				console.log(dia_id)
+				// 判断特殊事件触发
+				if (dia_id == 2){
+					//代码块
+					person_2.src = 'img/character/huangshi/huangshi_smile.png'
+					right_in('person2_img')
+				}
+				if(dia_id == 10){
+					right_out('person2_img')
+				}
+				if(dia_id == 13){
+					bg_img.src = 'img/bg_img/fantang.jpg'
+					person_2.src = 'img/character/heshen/heshen_nomal.png'
+					right_in('person2_img')
+				}
+				if(dia_id == 30){
+					left_out('person_img')
+				}
+				if(dia_id == 31){
+					person_2.style.display = 'none'
+				}
+				if(dia_id == 32){
+					left_in('person_img')
+					right_in('person2_img')
+				}
+				if(dia_id == 39){
+					bg_img.src = 'img/bg_img/class_foward.jpg'
+				}
+				if(dia_id == 46){
+					bg_img.src = 'img/bg_img/class_in.jpg'
+				}
+				if(dia_id == 60){
+					bg_img.src = 'img/bg_img/free_goldness.jpg'
+				}
+				if(dia_id == 64){
+					bg_img.src = 'img/bg_img/tianxian.jpg'
+				}
+			})
+			
+			// 存档
+			var save_btn = document.getElementById('save_btn')
+			save_btn.onclick = function(){
+				save(data)
+				console.log(data)
+			}
+			
+			
+			//继续传递数据
+			jsonData = JSON.stringify(data);
+			localStorage.setItem("jsonData", jsonData);
+			// window.location.href = "2.html";
+		</script>
+	</body>
+
+</html>

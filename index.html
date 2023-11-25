@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>LOADING</title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <style>
+		#bg_img{
+			position: fixed;
+			height: 100vh;
+			z-index: -1;
+			
+		}
+		#load{
+			position: fixed;
+			width: 100vw;
+			height: 100vh;
+			background-color: rgba(255, 255, 255, 0.5);
+			z-index: 0;
+		}
+		#get_in_game{
+			position: fixed;
+			width: 100vw;
+			height: 100vh;
+			z-index: 5;
+			display: none;
+			background-color: transparent;
+		}
+		#logo_img{
+			width: 30vw;
+			position: fixed;
+			left: 4%;
+			top: 5%;
+			z-index: 5;
+			display: none;
+		}
+		
+		
+		#audio_welcome{
+			position: fixed;
+			z-index: 4;
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	
+	<img src="img/logo.png" alt="" id="bg_img">
+	<img src="img/logo.png" alt="" id="logo_img">
+	<div id="load">
+		<h1 id="loading_text" style="position: fixed;
+		right: 5%;
+		bottom: 20%;
+		z-index: 5;
+		font-size: 150%;">Loading……</h1>
+		
+		
+	</div>
+	<div id="get_in_game">
+		<h3 style="position: fixed;
+			bottom: 10%;
+			text-align: center;
+			left: 50%;
+			transform: translate(-50%,0);
+			width: 100vw;
+			color: aliceblue;
+			background-color: rgba(170, 255, 255, 0.4);">点击任意地方进入游戏</h3>
+		<p style="position: fixed;bottom: 0%;text-align: center;
+		left: 50%;transform: translate(-50%,0);width: 150vw;color:white">抗拒不良游戏，拒绝沉迷〇神，科学游戏益脑，沉迷游戏伤身</p>
+	</div>
+	
+	<div id='audio_welcome'>
+		<video autoplay loop id ='audio_player'>
+			<source src="aud/miki.mp4" type="video/mp4" id='video_mp4'>
+			什么垃圾手机，这都显示不了
+			Your fuckking phone has been BOOM
+		</video>
+	</div>
+	
+	
+	<script type="text/javascript" charset="utf-8">
+	  	mui.init();
+		
+		var open_choose = Math.random() * 2
+		open_choose = parseInt(open_choose)
+		// var over_load = false
+		var img_list = ['1','2','3','4','5','6','7']
+		var len = img_list.length
+		var open_game = document.getElementById('get_in_game')
+		var bg_img = document.getElementById('bg_img')
+		bg_img.style.width = '100vw'
+		bg_img.style.height='100%'
+		var logo_img = document.getElementById('logo_img')
+		
+		var change_img_time = setTimeout(function(){
+			bg_img.src='img/youarelolicon.png'
+			clearTimeout(change_img_time)
+		},1500)
+		
+		// open_choose = 0
+		// open_choose = 1
+		
+		setTimeout(function(){
+			var loading_text = document.getElementById('loading_text')
+			logo_img.style.display = 'block'
+			loading_text.innerHTML = ''
+			open_game.style.display = 'block'
+			open_game.addEventListener('tap',function(){
+				mui.openWindow('welcome.html')
+			})
+		},14000)
+		
+		if(open_choose == 0){
+			//轮播图
+			
+			
+			function img_name(num){
+				var a = img_list[num]
+				num = 'img/person/' + a + '.JPG'
+				return num
+			}
+			
+			
+			var img_choose
+			var turn_img = setInterval(function(){
+				// console.log(img_choose)
+				img_choose = Math.random() * len
+				img_choose = parseInt(img_choose)
+				img_choose = img_name(img_choose)
+				bg_img.src = img_choose
+				bg_img.style.width = ''
+				bg_img.style.height='100vh'
+			},3000)
+			
+			
+		}
+		else if(open_choose == 1){
+			var wait = setTimeout(function(){
+				bg_img.style.display = 'none'
+				
+				logo_img.style.display = 'none'
+				var video_welcome = document.getElementById('audio_welcome')
+				video_welcome.style.display = 'block'
+				clearTimeout(wait)
+			},2000)
+		}
+		else if(open_choose == 2){
+			var wait_A = setTimeout(function(){
+				bg_img.style.display = 'none'
+				
+				logo_img.style.display = 'none'
+				var video_welcome = document.getElementById('audio_welcome')
+				var video_mp4 = document.getElementById('video_mp4')
+				var audio_player = document.getElementById('audio_player')
+				video_welcome.style.left = '-80%'
+				video_mp4.src = 'aud/loading.mp4'
+				audio_player.load()
+				audio_player.style.height = '100vh'
+				video_welcome.style.display = 'block'
+				
+				clearTimeout(wait)
+			},2000)
+			wait_A = setTimeout(function(){
+				var video_welcome = document.getElementById('audio_welcome')
+				var video_mp4 = document.getElementById('video_mp4')
+				var audio_player = document.getElementById('audio_player')
+				video_mp4.src = 'aud/over_load.mp4'
+				audio_player.load()
+				clearTimeout(wait_A)
+			},16300)
+		}
+		
+	</script>
+</body>
+</html>

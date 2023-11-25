@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<style>
+			.test{
+				position: fixed;
+				width: 10vw;
+				height: 10vw;
+				background-color: aqua;
+				z-index: 1;
+				left: 40%;
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="test" id="test"></div>
+		<input type="textarea" class="name" id ='name'>
+		<input type="textarea" class="text" id="text">
+		<input type="textarea"  id="show" style="width: 100vw;height: 100vh;">
+		<button id="hand_up" style="position: fixed;top: 0%;right: 0%;">hand up</button>
+		<script src="../js/mui.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			var dia=[]
+			var names = document.getElementById('name')
+			var text = document.getElementById('text')
+			var show = document.getElementById('show')
+			var one
+			var btn = document.getElementById('hand_up')
+			btn.onclick = function(){
+				console.log(text.value)
+				one = `'`+names.value + text.value+ `'`
+				dia.push(one)
+				text.value=''
+			}
+			
+			setInterval(function(){
+				show.value = dia
+			},99)
+		</script>
+	</body>
+
+</html>

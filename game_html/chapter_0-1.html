@@ -1,0 +1,515 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<script src="js/gobla.js"></script>
+		<style type="text/css">
+			/* 背景图片 */
+			#bg_img{
+				position: fixed;
+				top: 0%;
+				left: 0%;
+				z-index: 0;
+				height: 100vh;
+				
+			}
+			
+			/* 人物图片 */
+			.person_img{
+				position: fixed;
+				left: 50%;
+				bottom: -15%;
+				transform: translate(-50%,0);
+				z-index: 1;
+				height: 100%;
+			}
+			.person2_img{
+				position: fixed;
+				left: 50%;
+				bottom: -15%;
+				transform: translate(-50%,0);
+				z-index: 1	;
+				height: 100%;
+				display: none;
+			}
+			
+			/* 对话框 */
+			.show_dialogue{
+				position: fixed;
+				background-color: rgba(61, 255, 226, 0.5);
+				width: 100vw;
+				height: 30vh;
+				border-radius: 25px;
+				bottom: 1%;
+				text-align: center;
+				z-index: 4;
+			}
+			
+			/* NEXT按钮 */
+			.next{
+				position: fixed;
+				bottom: 1%;
+				right: 1%;
+				width: 20%;
+				/* height: 100%; */
+				/* background-color: rgba(170, 170, 255, 0.7); */
+				border: none;
+				color: white;
+				z-index: 5;
+			}
+			
+			/* 章节显示 */
+			.chapter_name{
+				position: fixed;
+				top: 0%;
+				/* background-color: rgba(5, 124, 234, 0.6); */
+				/* background-image: url('../img/chapter_bg.jpg'); */
+				background-color: rgba(0,0,0,0);
+				height: 8vh;
+				width: 50vw;
+				text-align: center;
+				z-index: 10;
+				animation: chaper_show 5s;
+				/* animation-fill-mode: forwards; */
+				transform: translate(-200%);
+				
+			}
+			@keyframes chaper_show{
+				0%{transform: translate(-200%,0);display: none;}
+				1%{transform: translate(-200%,0);display: block;}
+				30%{transform: translate(0);}
+				70%{transform: translate(0);}
+				99%{transform: translate(-200%,0);}
+				100%{transform: translate(-200%,0);display: none;}
+			}
+			
+			/* 全屏结束 */
+			.end{
+				position: fixed;
+				height: 100vh;
+				width: 100vw;
+				text-align: center;
+				background-color: black;
+				color:white;
+				z-index: 999;
+				top: 0%;
+				display: none;
+			}
+			
+			/* 选择 */
+			.choose{
+				height: 40vh;
+				width: 100vw;
+				display: none;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+				z-index: 3;
+			}
+			.choose_one{
+				width: 100vw;
+				background-image: url();
+				color: white;
+				text-align: center;
+				position: fixed;
+				left: 50%;
+				transform: translate(-50%,0);
+			}
+			.choose_two{
+				width: 100vw;
+				background-image: url();
+				color: white;
+				text-align: center;
+				position: fixed;
+				left: 50%;
+				transform: translate(-50%,0);
+			}
+			.choose_three{
+				width: 100vw;
+				background-image: url();
+				color: white;
+				text-align: center;
+				position: fixed;
+				left: 50%;
+				transform: translate(-50%,0);
+			}
+			
+			/* 存档 */
+			.save_data{
+				position: fixed;
+				width: 20vw;
+				right: 3%;
+				top: 3%;
+			}
+			#save_btn{
+				background-color: beige;
+				width: 15vw;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script src="../js/mui.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		
+		
+		<!-- html代码区 -->
+		<div class="mui-content">
+			
+			<!-- 图片 -->
+			<img class = 'bg_img' id='bg_img' src='img/bg_img/chunhu1.jpg'/><!-- 背景图 -->
+			<img class = 'person_img' id='person_img' src='img/character/huangjiaru/huangjiaru_nomal_bg.png'/><!-- 人物图 -->
+			<img class = 'person2_img' id='person2_img' src='img/character/huangshi/huangshi_smile_bg.png'/><!-- 人物图 -->
+			
+			<!-- 对话框 -->
+			<div class='show_dialogue'id='show_dialogue'>
+				
+				<h1 class='dia_text' id='dia_text' style="font-size:140%;text-align: left;width: 100vw;"></h1>
+			</div>
+			
+			
+			<!-- 下一个 按钮 -->
+			<!-- <button class='next' id='next' onclick="next()">NEXT</button> -->
+			<img src="img/ui/next_btn.png" id="next" class="next">
+			
+			<!-- 章节名 -->
+			<div class='chapter_name' id="chapter_name">
+				<img src="img/ui/chapter_bg.png" style="width: 80vw;position: fixed;z-index: 3;left: 0%;height: 9vh;">
+				<h1 style="position: fixed;top: 4vh;
+				transform: translate(-13%,-50%);z-index: 4;
+				width: 100vw;">CHAPTER 0-1</h1>
+			</div>
+			
+			<!-- 存档按钮 -->
+			<div class='save_data'>
+				<button type="submit" id="save_btn">存档</button>
+			</div>
+			
+			<!-- 结束窗口 -->
+			<div class="end" id='end'>
+				<h1 style="position: fixed;top: 50%;left: 50%;
+				transform: translate(-50%,-50%);width: 100vw;"> 该章节已结束！</h1>
+			</div>
+			
+			
+			<!-- 选择窗口 -->
+			<div class="choose" id="choose">
+				<div class="choose_one" id="choose_one">
+					<button class='choose_1' id ='choose_1' style="width: 80vw; height: 7vh;">选择1</button>
+					
+				</div>
+				<br>
+				<br>
+				<br>
+				<div class="choose_two" id="choose_two">
+					<button class='choose_2' id ='choose_2' style="width: 80vw; height: 7vh;">选择2</button>
+				</div>
+				<br>
+				<br>
+				<br>
+				<div class="choose_three" id="choose_three">
+					<button class='choose_3' id ='choose_3' style="width: 80vw; height: 7vh;">选择3</button>
+				</div>
+			</div>
+			
+		</div>
+		
+
+		<!-- 内嵌JS代码区 -->
+		
+		<script>
+			right_in('person_img')
+			// 获取并解析JSON数据
+			var jsonData = localStorage.getItem("jsonData");
+			localStorage.removeItem("jsonData");
+			var data = JSON.parse(jsonData);
+			
+			var data = {
+				love_lv:0,
+				love_ex:0,
+				chapter:'0-1',
+				item:[],
+				dia_id:dia_id
+			}
+			
+
+		// 基本变量
+		//文案
+			var dialogue = ['【？】我，','【？】我，大帅B！','【？】我，大帅B！主角！','【？】我，大帅B！主角！J cao！','【黄家儒】闪亮登场！','【黄家儒】什么？','【黄家儒】什么？还不知道我是谁？','【黄家儒】呵……','【黄家儒】呵……呵……','【黄家儒】无知的……','（唰）','【黄家儒】（。。。。。。）','【黄家儒】（？？）','【黄家儒】（！！）','【黄家儒】woc,有偷子！','【黄家儒】校卡没了！'
+			,'【黄家儒】byd,看我直接……','【？】哦吼吼~！','【？】正义的我直接出击！','【黄家儒】……','……','【？】BYD直接给你扔蠢湖里','【？】世界和平','【黄家儒】r！我校卡！','【？】正义的我全身而退！','choose',
+			//我直接跳下去
+				'（捞）','【？】谢谢你，救了我','choose','【？】...','【？】哥们我眼镜掉了，看不见文案。','choose','(蓄力)','(飞跑)','(噗通)','【河神（？）】欧，少年',
+				'【河神（？）】你掉的是这个校卡还是眼镜？','choose',
+				//眼镜38
+				'【黄家儒】诺，还你','【？】谢谢','【黄家儒】所以我的卡呢','【？】河里','【黄家儒】不合理','【？】……','【？】在16班','【黄家儒】居然在16班，我还以为在河里','end',
+				//校卡47
+				'【黄家儒】你偷我卡干嘛','【？】……','【？】！！','【？】别人校卡丢了补办要15块','【？】而你却没花钱！','【？】相当于你赚了六中15块！','【黄家儒】哇，好强的数学计算（念稿）','【黄家儒】你哪个班的','【？】我看不见文案','【黄家儒】（掏出SG 553）','【？】我16班的','【黄家儒】这个人……不会是数学天才……？','end',
+				//都不是我的//60
+				'【河神】！！我超！！','【河神】⭐诚 ⭐实 ⭐的 ⭐孩⭐ 子 ','【河神】那我就告诉你吧','【河神】岸上的那个他！','【河神】其实！','【河神】是你的未婚妻！','【黄家儒】还真是（？','【黄家儒】怪不得第一眼看上去就快爆炸','【河神】他是！','【河神】他是！16班的！','end',
+			//关我P事71
+			'【黄家儒】关我P事，老子卡呢','【？】……','【？】我看不见文案','【黄家儒】(比划)','【？】（思考）','【？】！！','【黄家儒】（他好像想到什么了）','【黄家儒】（……）','【黄家儒】（他跑了）','【黄家儒】byd还来','','【黄家儒】byd跟丢了','【黄家儒】淦，刚开学就要补办','【黄家儒】？','【黄家儒】我到班了','【？】？？','【？】我眼镜呢','【黄家儒】欸，他是16班的？','end',
+			//害羞，他跟我说话了90
+			'【黄家儒】……','【黄家儒】…………','【黄家儒】………………','【？】？？','【黄家儒】（！他好可爱）','【？】？？？','【黄家儒】（他声音好好听）','【？】？？？？','【黄家儒】！！！！','【？】那个','【？】我16班的，有什么事再找我','【？】（byd眼镜没了）','end'
+			]
+				
+			
+			
+			// 关键字符串基本触发规则：
+			// 'choose'触发 选择函数
+			// 'end' 触发 结束函数，跳转下一章节
+
+			// 侦测字符串触发
+			var choose_id = 1 //选项id(第几次选项)
+			var choose_btn = document.getElementById('choose')
+			var choose_btn1 = document.getElementById('choose_1')
+			var choose_btn2 = document.getElementById('choose_2')
+			var choose_btn3 = document.getElementById('choose_3')
+			var next_btn = document.getElementById('next')
+			
+			var person_1 = document.getElementById('person_img')
+			var person_2 = document.getElementById('person2_img')
+			var bg_img = document.getElementById('bg_img')
+			
+			
+			function test_dia(){
+				if(dialogue[dia_id] =='choose'){
+					// 触发选择
+					choose_btn1.style.display = 'block'
+					choose_btn2.style.display = 'block'
+					choose_btn3.style.display = 'block'
+					choose_btn.style = 'display:block'
+					next_btn.style='display:none'
+					if(choose_id == 1){
+						// 代码块
+						choose_btn1.innerHTML = '把偷子捞上来'
+						choose_btn2.style.display = 'none'
+						choose_btn3.style.display = 'none'
+						choose_btn1.onclick = function(){
+							overchoose()
+							dia_id = dia_id + 1
+							person_2.src = 'img/character/huangshi/huangshi_smile_bg.png'
+							person_1.src = 'img/character/huangjiaru/huangjiaru_nomal.png'
+							up_in('person_img')
+							up_in('person2_img')
+							left_in('person_img')
+							right_in('person2_img')
+						}
+					}
+					
+					else if(choose_id == 2){
+						//代码块
+						choose_btn1.innerHTML = '同学，你哪个班的'
+						choose_btn2.innerHTML = 'byd,老子卡呢'
+						choose_btn3.innerHTML = '(我直接高情商)你长得跟屎一样'
+						choose_btn1.onclick = function(){
+							overchoose()
+							dia_id = dia_id + 1
+						}
+						choose_btn2.onclick = function(){
+							overchoose()
+							dia_id = dia_id + 1
+						}
+						choose_btn3.onclick = function(){
+							overchoose()
+							dia_id = dia_id + 1
+						}
+					}
+					else if(choose_id ==3){
+						choose_btn1.innerHTML = '我直接跳下去捡'
+						choose_btn2.innerHTML = '关我P事'
+						choose_btn3.innerHTML = '害羞，他跟我说话了'
+						choose_btn1.onclick = function(){
+							overchoose()
+							choose_id = 'choose_A_1'
+							dia_id = dia_id + 1
+						}
+						choose_btn2.onclick = function(){
+							
+							overchoose()
+							dia_id = 71
+						}
+						choose_btn3.onclick = function(){
+							dia_id = 90
+							overchoose()
+						}
+					}
+					// 我直接跳下去捡 - 选项
+					else if(choose_id == 'choose_A_1'){
+						choose_id = 4
+						choose_btn1.innerHTML = '校卡'
+						choose_btn2.innerHTML = '眼镜'
+						choose_btn3.innerHTML = '照剧本来说，都不是我掉的'
+						choose_btn1.onclick = function(){
+							dia_id = 47
+							overchoose()
+							person_1.src = 'img/character/huangjiaru/huangjiaru_nomal.png'
+							person_2.src = 'img/character/huangshi/huangshi_smile.png'
+							left_in('person_img')
+							right_in('person2_img')
+						}
+						choose_btn2.onclick = function(){
+							dia_id = 38
+							overchoose()
+							person_1.src = 'img/character/huangjiaru/huangjiaru_nomal.png'
+							person_2.src = 'img/character/huangshi/huangshi_smile.png'
+							left_in('person_img')
+							right_in('person2_img')
+						}
+						choose_btn3.onclick = function(){
+							dia_id = 60
+							overchoose()
+						}
+						
+					}
+					
+				}
+				
+				else if(dialogue[dia_id] == 'end'){
+					// 触发结束事件
+					var end = document.getElementById('end')
+					end.style = 'display:block;'
+					//继续传递数据
+					data.chapter = '0-2'
+					setTimeout(function(){
+						jsonData = JSON.stringify(data);
+					localStorage.setItem("jsonData", jsonData);
+					
+					window.location.href = "chapter_0-2.html";
+					},3000)
+					
+				}
+			}
+			
+			
+			var dia_id = 0//文案播放进度
+			
+			//选择结束后调用该函数
+			function overchoose(){
+				choose_btn.style='display:none'
+				choose_btn1.style.removeProperty('background-color')
+				choose_btn2.style.removeProperty('background-color')
+				choose_btn3.style.removeProperty('background-color')
+				choose_id = choose_id + 1
+				next_btn.style = 'display:block'
+			}
+			
+			
+			// 控制刷新页面 -帧率为32帧
+			var dia_text = document.getElementById('dia_text')
+			var fpsshow = setInterval(function(){
+				//刷新文本
+				if(dialogue[dia_id] == 'choose'){
+					dia_text.innerHTML = '请选择'
+				}
+				else{
+					dia_text.innerHTML = dialogue[dia_id]
+				}
+				
+				//侦测文本
+				test_dia()
+				
+			},1000/32)
+			
+			// 执行下一个函数
+			mui('#next')[0].addEventListener('tap',function(){
+				dia_id = dia_id + 1
+				data.dia_id = dia_id
+				console.log(dia_id)
+				// 判断特殊事件触发
+				
+				if (dia_id == 10){
+					//代码块
+					fast_right_to_left('person2_img')
+				}
+				if(dia_id == 4){
+					person_1.src = 'img/character/huangjiaru/huangjiaru_nomal.png'
+				}
+				if(dia_id == 16){
+					person_2.src = 'img/character/lisuming/lisuming_smile_bg.png'
+					
+				}
+				if(dia_id == 17){
+					right_in('person2_img')
+				}
+				if(dia_id == 18){
+					fly_out('person2_img')
+				}
+				if(dia_id == 20){
+					person_1.src = 'img/character/lisuming/lisuming_smile_bg.png'
+					up_in('person_img')
+					left_in('person_img')
+					person_2.src = 'img/character/huangshi/huangshi_smile_bg.png'
+					right_in('person2_img')
+					person_1.src = 'img/character/lisuming/lisuming_smile.png'
+				}
+				if(dia_id == 21){
+					down_out("person2_img")
+					bg_img.src = 'img/bg_img/chunhu2.jpg'
+				}
+				if(dia_id == 23){
+					person_2.src = 'img/character/huangjiaru/huangjiaru_nomal.png'
+					person_2.style.top = '15%'
+					fast_right_to_left('person2_img')
+				}
+				if(dia_id == 24){
+					fly_out('person_img')
+				}
+				if(dia_id == 27){
+					person_2.src = 'img/character/huangshi/huangshi_smile.png'
+				}
+				if(dia_id == 33){
+					left_out('person_img')
+				}
+				if(dia_id == 34){
+					person_1.style.display = 'none'
+					person_2.src = 'img/character/heshen/heshen_tuo.png'
+					up_in('person2_img')
+					right_in('person2_img')
+				}
+				
+				if(dia_id == 78){
+					right_out('person2_img')
+				}
+				if(dia_id == 80){
+					right_out('person_img')
+				}
+				if(dia_id == 81){
+					bg_img.src= 'img/bg_img/class_foward.jpg'
+				}
+				if(dia_id == 82){
+					left_in('person_img')
+				}
+				if(dia_id == 86){
+					bg_img.src = 'img/bg_img/class_back.jpg'
+					person_1.style.display = 'none'
+					right_in('person2_img')
+					
+				}
+				if(dia_id == 88){
+					bg_img.src= 'img/bg_img/class_foward.jpg'
+					person_1.style.display = 'block'
+					person_2.style.display = 'none'
+					left_in('person_img')
+				}
+			})
+			
+			// 存档
+			var save_btn = document.getElementById('save_btn')
+			save_btn.onclick = function(){
+				save(data)
+				console.log(data)
+			}
+			
+			
+			
+		</script>
+	</body>
+
+</html>

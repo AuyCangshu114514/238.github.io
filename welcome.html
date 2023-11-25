@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<script src="game_html/js/gobla.js"></script>
+		<style>
+			#all_btn{
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+				
+			}
+			#load{
+				width: 70vw;
+				border-radius: 15px;
+				background-color: rgba(187, 195, 221, 0.7);
+			}
+			
+			#start{
+				width: 70vw;
+				border-radius: 15px;
+				background-color: rgba(150, 176, 133, 0.7);
+				margin-top: 10px;
+				
+			}
+			#hood{
+				width: 70vw;
+				border-radius: 15px;
+				background-color: rgba(222, 222, 0, 0.7);
+				margin-top: 10px;
+				display: none;
+			}
+			#logo_img{
+				position: fixed;
+				top: 3%;
+				left: 5%;
+				width: 50vw;
+				
+			}
+		</style>
+	</head>
+
+	<body>
+		<img id="logo_img" src="img/logo.png" alt="什么垃圾手机,这都显示不了">
+		
+		<div class="all_btn" id="all_btn">
+			<button id="load" onclick="read_save()">读档</button>
+			
+			<button id="start" onclick="new_game()">新的开始</button>
+			
+			<button id="hood" onclick="window.location.href = 'all_pack.html'">神秘按钮</button>
+		</div>
+		
+		
+		<script src="js/mui.js"></script>
+		<script type="text/javascript">
+			window.onload = function() {
+			  var savedData = localStorage.getItem("test_True");
+			  if (savedData) {
+			    var hood = document.getElementById('hood')
+			    hood.style.display = 'block'
+			  }
+			};
+			mui.init()
+			function read_save(){
+				var data = load_save()
+				// console.log(data)
+				var chapter = data.chapter
+				window.location.href = 'game_html/chapter_' + chapter + '.html'
+			}
+			
+			function new_game(){
+				window.location.href = 'game_html/chapter_0-1.html'
+			}
+		</script>
+	</body>
+
+</html>
